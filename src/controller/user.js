@@ -18,7 +18,6 @@ function getAllUsers(req, res) {
         if (err) {
             throw err
         };
-        console.log("Result: " + result);
         res.send(result)
     });
 }
@@ -30,7 +29,6 @@ function getUserById(req, res) {
         if (err) {
             throw err
         };
-        console.log("Result: " + result);
         res.send(result)
     });
 }
@@ -41,7 +39,6 @@ function addUsers(req, res) {
         if (err) {
             throw err
         };
-        console.log("Result: " + result);
         res.send(result)
     });
 }

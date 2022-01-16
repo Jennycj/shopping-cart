@@ -18,7 +18,6 @@ function getAllProducts(req, res) {
         if (err) {
             throw err
         };
-        console.log("Result: " + result);
         res.send(result)
     })
 }
@@ -30,7 +29,6 @@ function getProductById(req, res) {
         if (err) {
             throw err
         };
-        console.log("Result: " + result);
         res.send(result)
     });   
 }
@@ -41,7 +39,6 @@ function addProducts(req, res) {
         if (err) {
             throw err
         };
-        console.log("Result: " + result);
         res.send(result)
     });  
 }

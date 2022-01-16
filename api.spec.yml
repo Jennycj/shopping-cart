@@ -1,0 +1,425 @@
+swagger: '2.0'
+info:
+  description: This is an API documentation for a shopping cart app.
+  version: 1.0.0
+  title: Shopping cart app
+  
+  contact:
+    email: ezeobijennifer2@gmail.com
+
+tags:
+- name: carts
+  description: routes relating to user's cart
+- name: products
+  description: routes peculiar to products
+- name: users
+  description: routes peculiar to users
+
+paths:
+  /carts/clear/{userId}/{cartId}:
+    get:
+      tags:
+      - carts
+      summary: clears cart item
+      operationId: clearCart
+      description: clears all the items in the cart
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: userId
+        description: Id of the euser making request
+        required: true
+        type: string
+      - in: path
+        name: cartId
+        description: Id of cart that was cleared
+        required: true
+        type: string
+        format: int32
+        minimum: 0
+      - in: query
+        name: limit
+        description: maximum number of records to return
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 50
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties:
+             message:
+              type: string
+              example: Cart has been cleared
+        500:
+          description: Internal server error
+          
+  /carts/{userId}/{cartId}/{productId}:
+    get:
+      tags:
+      - carts
+      summary: remove item from cart
+      operationId: removeProductFromCart
+      description: removes product from the cart
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: userId
+        description: Id of the user making request
+        required: true
+        type: string
+      - in: path
+        name: cartId
+        description: Id of user's cart
+        required: true
+        type: string
+      - in: path
+        name: productId
+        description: Id of the product to be added to cart
+        required: true
+        type: string
+        format: int32
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties:
+             message:
+              type: string
+              example: Product removed from cart
+        500:
+          description: Internal server error
+          
+  /carts/{cartId}:
+    get:
+      tags:
+      - carts
+      summary: get cart
+      operationId: getCart
+      description: get all items in the cart
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: cartId
+        description: Id of user's cart
+        required: true
+        type: string
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties:
+             total:
+              type: number
+             items:
+              type: array
+              items:
+                type: object
+                properties:
+                  title:
+                   type: string
+                  description:
+                   type: string
+                  price:
+                   type: number
+                  itemQty:
+                   type: number
+            example: 
+              items:
+              - title: apple
+                description: a juicy green fruit
+                price: 100
+                itemQty: 4
+              - title: spinach
+                description: a vitamin-rich veggie
+                price: 50
+                itemQty: 5
+              total: 650
+        500:
+          description: Internal server error
+ 
+  /carts/{userId}/{productId}/:
+    post:
+      tags:
+      - carts
+      summary: adds a product item to cart
+      operationId: addToCart
+      description: Adds a product item to the cart and updates the quantity of the item in the cart
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: userId
+        description: Id of the user making request
+        type: string
+        required: true
+      - in: path
+        name: productId
+        description: Id of the product that is added to cart
+        type: string
+        required: true
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties: 
+              message: 
+                type: string
+                example: Product has been added to cart
+        500:
+          description: internal server error
+          
+  /users:
+    get:
+      tags:
+      - users
+      summary: get all users
+      operationId: getUsers
+      description: get all users
+      produces:
+      - application/json
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties:
+             users:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                   type: number
+                  username:
+                   type: string
+                  password:
+                   type: string
+                  email:
+                   type: string
+            example: 
+              items:
+              - id: 1
+                username: jay
+                password: password
+                email: jay@example.com
+              - id: 2
+                username: sam
+                password: access
+                email: sam@example.com
+        500:
+          description: Internal server error
+          
+  /users/{id}:
+    get:
+      tags:
+      - users
+      summary: get user by id
+      operationId: getUserById
+      description: get a single user by id
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: id
+        description: Id of user
+        required: true
+        type: string
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties:
+             users:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                   type: number
+                  username:
+                   type: string
+                  password:
+                   type: string
+                  email:
+                   type: string
+            example: 
+              items:
+              - id: 1
+                username: jay
+                password: password
+                email: jay@example.com
+        500:
+          description: Internal server error
+
+  /addusers:
+    get:
+      tags:
+      - users
+      summary: add users
+      operationId: addUser
+      description: add new user
+      produces:
+      - application/json
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties:
+             message:
+              type: string
+              example: user created
+        500:
+          description: Internal server error
+          
+  /products:
+    get:
+      tags:
+      - products
+      summary: get all products
+      operationId: getProducts
+      description: get all products
+      produces:
+      - application/json
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties:
+             products:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                   type: number
+                  title:
+                   type: string
+                  description:
+                   type: string
+                  sku:
+                   type: string
+                  qty:
+                   type: number
+                  category:
+                   type: string
+                  price:
+                   type: number
+                  expiry:
+                   type: string
+            example: 
+              items:
+              -  id: 1,
+                 title: apple,
+                 description: a delicious green fruit,
+                 sku: A103B11,
+                 qty: 10,
+                 category: fruits,
+                 price: 50,
+                 expiry: "2022-01-14T23:00:00.000Z"
+              -  id: 2,
+                 title: yam,
+                 description: a sumptous tuber,
+                 sku: B104B21,
+                 qty: 10,
+                 category: tubers,
+                 price: 100,
+                 expiry: "2022-01-14T23:00:00.000Z"
+        500:
+          description: Internal server error
+          
+  /products/{id}:
+    get:
+      tags:
+      - products
+      summary: get product by id
+      operationId: getProductById
+      description: get a single product by id
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: id
+        description: Id of product
+        required: true
+        type: string
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties:
+             products:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                   type: number
+                  title:
+                   type: string
+                  description:
+                   type: string
+                  sku:
+                   type: string
+                  qty:
+                   type: number
+                  category:
+                   type: string
+                  price:
+                   type: number
+                  expiry:
+                   type: string
+            example: 
+              items:
+              -  id: 1,
+                 title: apple,
+                 description: a delicious green fruit,
+                 sku: A103B11,
+                 qty: 10,
+                 category: fruits,
+                 price: 50,
+                 expiry: "2022-01-14T23:00:00.000Z"
+        500:
+          description: Internal server error
+  
+  /addproducts:
+    get:
+      tags:
+      - products
+      summary: add products
+      operationId: addProduct
+      description: add new product
+      produces:
+      - application/json
+      responses:
+        200:
+          description: success response message
+          schema:
+            type: object
+            properties:
+             message:
+              type: string
+              example: product added
+        500:
+          description: Internal server error
+          
+          
+host: 'localhost:5003'
+basePath: /
+schemes:
+  - http
+  - https
