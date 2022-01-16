@@ -14,6 +14,6 @@
 
 #### You can set the environment variables required to run the app by copying the sample.env file and editing it to fit
 
-#### To start the app, run `npm start` and then run `npm install` to install the application dependencies
+#### To start the app, run `npm install` to install the application dependencies and then  run `npm start` to get your server running
 
 #### All works fine, you can check the api documentation in api.spec.yml file to get the requirements for running the available enpoints
