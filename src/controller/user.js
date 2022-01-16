@@ -18,6 +18,7 @@ function getAllUsers(req, res) {
         if (err) {
             throw err
         };
+        if (result.length <=0) {return res.send({message: `There are no users yet`})}
         res.send(result)
     });
 }
@@ -29,6 +30,7 @@ function getUserById(req, res) {
         if (err) {
             throw err
         };
+        if (result.length <= 0) {return res.send({message: `user with id ${id} not found`})}
         res.send(result)
     });
 }

@@ -18,7 +18,10 @@ function getAllProducts(req, res) {
         if (err) {
             throw err
         };
-        res.send(result)
+        if (result.length <=0) {
+            return res.send({message: `There are no products in store`, data: []});
+        }
+        res.send({message: `There are no products in store`, data: result});
     })
 }
 
@@ -29,7 +32,10 @@ function getProductById(req, res) {
         if (err) {
             throw err
         };
-        res.send(result)
+        if (result.length <=0) {
+            return res.send({message: `Product with id: ${id} not found`, data: null})
+        }
+        res.send({ message: 'Product found', data: result })
     });   
 }
 
@@ -39,7 +45,7 @@ function addProducts(req, res) {
         if (err) {
             throw err
         };
-        res.send(result)
+        res.send({ message: 'Product added successfully', data: result })
     });  
 }
 
