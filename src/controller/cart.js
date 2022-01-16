@@ -79,13 +79,11 @@ async function clearCart (req, res) {
 
 async function getCart (req, res) {
     const cartId = req.params.cartId
-    const cart = 'SELECT *, cartProducts.qty as itemQty FROM cartProducts join products on cartProducts.product_id = products.id where cart_id = ?'
+    const cart = 'SELECT products.title, products.description, products.price, cartProducts.qty as itemQty FROM cartProducts join products on cartProducts.product_id = products.id where cart_id = ?'
     let [rows] = await pool.promise().query(cart, [cartId])
     if (rows.length <= 0) {return res.send({message: "Cart is empty"})}
-    const total = rows.reduce((acc, x) => (x.price * x.itemQty)+ acc, 0)
+    const total = rows.reduce((acc, x) => (x.price * x.itemQty) + acc, 0)
     res.send({items: rows, total})
 }
-
-
 
 module.exports = { addToCart, removeProductFromCart, clearCart, getCart };
